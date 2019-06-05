@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+<form id="labnol1">
+    <div class="speech">
+        <input type="text" name="" id="transcript2" placeholder="Speak " />
+        <img onclick="startDictationApplication()" src="//i.imgur.com/cHidSVu.gif" />
+    </div>
+</form>
+
+  </body>
+  <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Content/sweetalert.min.js"></script>
+
+<script>
+    function startDictationApplication() {
+
+        if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+            var recognition = new webkitSpeechRecognition();
+
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.lang = "en-US";
+            recognition.start();
+
+            recognition.onresult = function(e) {
+                document.getElementById('transcript2').value
+                                         = e.results[0][0].transcript;
+
+                recognition.stop();
+                if (document.getElementById('transcript2').value == "forum") {
+                    swal({
+                        type: "success",
+                        title: "Loud and Clear!",
+                        text: "Taking you to the forum!",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    window.location.href = 'file:///C:/Users/ml/js_s_rec/relevant view';
+                } else {
+                    swal({
+                        type: "error",
+                        title: "No such page!",
+                        text: "Please refer to supported voice recogniton pages and try again!",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            };
+
+            recognition.onerror = function(e) {
+                recognition.stop();
+            }
+
+        }
+    }
+</script>
+
+
+</html>
